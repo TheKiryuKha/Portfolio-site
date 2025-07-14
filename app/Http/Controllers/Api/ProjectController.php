@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api;
 
 use App\Actions\Api\CreateProject;
+use App\Actions\Api\DeleteProject;
 use App\Actions\Api\EditProject;
 use App\Http\Requests\Api\Project\CreateRequest;
 use App\Http\Requests\Api\Project\UpdateRequest;
 use App\Http\Resources\Api\ProjectResource;
 use App\Models\Project;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
 
 final class ProjectController
 {
@@ -36,5 +38,12 @@ final class ProjectController
         );
 
         return new ProjectResource($project);
+    }
+
+    public function destroy(Project $project, DeleteProject $action): Response
+    {
+        $action->handle($project);
+
+        return response(status: 204);
     }
 }
