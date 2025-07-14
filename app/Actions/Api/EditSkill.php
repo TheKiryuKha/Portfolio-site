@@ -11,7 +11,7 @@ final readonly class EditSkill
     /**
      * Execute's the action
      *
-     * @param  array<string, mixed>  $status
+     * @param  array<string, mixed>  $attributes
      */
     public function handle(Skill $skill, array $attributes): Skill
     {
