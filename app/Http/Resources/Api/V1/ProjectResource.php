@@ -34,7 +34,7 @@ final class ProjectResource extends JsonResource
             // TODO
             'links' => [
                 'self' => 'TODO',
-                'parent' => 'TODO',
+                'parent' => route('api:v1:projects:index'),
             ],
 
         ];
