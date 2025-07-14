@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Requests\Api;
+namespace App\Http\Requests\Api\Skill;
 
+use App\Enums\SkillStatus;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-final class SkillRequest extends FormRequest
+final class UpdateRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -16,8 +18,7 @@ final class SkillRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'description' => ['required', 'string', 'min:1', 'max:10'],
-            'source' => ['required', 'string', 'min:1', 'max:255'],
+            'status' => ['required', Rule::enum(SkillStatus::class)],
         ];
     }
 }
