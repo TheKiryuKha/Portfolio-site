@@ -18,6 +18,7 @@ final class AppServiceProvider extends ServiceProvider
         $this->configureModels();
         $this->configureUrls();
         $this->configureCommands();
+        $this->configureDates();
     }
 
     private function configureModels(): void
