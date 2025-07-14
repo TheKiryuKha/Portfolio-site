@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Http\Resources\Api;
 
-use App\Models\Project;
+use App\Models\Skill;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * @property-read Project $resource
+ * @property-read Skill $resource
  */
-final class ProjectResource extends JsonResource
+final class SkillResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -22,11 +22,10 @@ final class ProjectResource extends JsonResource
     {
         return [
             'id' => $this->resource->id,
-            'type' => 'project',
+            'type' => 'skill',
             'attributes' => [
-                'title' => $this->resource->title,
                 'description' => $this->resource->description,
-                'link' => $this->resource->link,
+                'source' => $this->resource->source,
                 'created' => new DateResource(
                     $this->resource->created_at
                 ),
