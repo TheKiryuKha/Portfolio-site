@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api;
 
-use App\Actions\Api\V1\CreateProject;
-use App\Http\Requests\Api\V1\Project\CreateRequest;
-use App\Http\Resources\Api\V1\ProjectResource;
+use App\Actions\Api\CreateProject;
+use App\Http\Requests\Api\Project\CreateRequest;
+use App\Http\Resources\Api\ProjectResource;
 use App\Models\Project;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 

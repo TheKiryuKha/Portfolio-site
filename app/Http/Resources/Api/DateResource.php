@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Resources\Api\V1;
+namespace App\Http\Resources\Api;
 
 use Carbon\CarbonInterface;
 use Illuminate\Http\Request;

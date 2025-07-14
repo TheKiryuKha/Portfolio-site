@@ -8,7 +8,7 @@ use App\Models\User;
 // TODO authorization
 it('returns the correct status code if unauthenticated', function () {
     $this->getJson(
-        route('api:v1:projects:store')
+        route('api:projects:store')
     )->assertStatus(401);
 })->skip();
 
@@ -21,7 +21,7 @@ it('can creates project', function () {
     $user = User::factory()->create();
 
     $this->actingAs($user)
-        ->post(route('api:v1:projects:store', $project))
+        ->post(route('api:projects:store', $project))
         ->assertStatus(201);
 
     expect(Project::count())->toBe(1)

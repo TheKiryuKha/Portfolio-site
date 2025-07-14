@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Resources\Api\V1;
+namespace App\Http\Resources\Api;
 
 use App\Models\Project;
 use Illuminate\Http\Request;
@@ -34,7 +34,7 @@ final class ProjectResource extends JsonResource
             // TODO
             'links' => [
                 'self' => 'TODO',
-                'parent' => route('api:v1:projects:index'),
+                'parent' => route('api:projects:index'),
             ],
 
         ];

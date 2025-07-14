@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Actions\Api\V1;
+namespace App\Actions\Api;
 
 use App\Models\Project;
 
