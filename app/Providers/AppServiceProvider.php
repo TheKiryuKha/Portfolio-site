@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use Carbon\CarbonImmutable;
+use Date;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\URL;
@@ -15,7 +17,7 @@ final class AppServiceProvider extends ServiceProvider
     {
         $this->configureModels();
         $this->configureUrls();
-        $this->configureDb();
+        $this->configureCommands();
     }
 
     private function configureModels(): void
@@ -24,7 +26,7 @@ final class AppServiceProvider extends ServiceProvider
         Model::unguard();
     }
 
-    private function configureDb(): void
+    private function configureCommands(): void
     {
         DB::prohibitDestructiveCommands(app()->isProduction());
     }
@@ -32,5 +34,10 @@ final class AppServiceProvider extends ServiceProvider
     private function configureUrls(): void
     {
         URL::forceHttps(app()->isProduction());
+    }
+
+    private function configureDates(): void
+    {
+        Date::use(CarbonImmutable::class);
     }
 }
