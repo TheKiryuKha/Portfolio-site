@@ -9,3 +9,10 @@ Route::get('/login', function () {
 })->middleware('guest')->name('login-form');
 
 Route::post('/login', [AuthController::class, 'createLink'])->name('login');
+
+Route::get('/email-sent', function () {
+    return view('auth.email-sent');
+})->name('email-sent');
+
+Route::get('/login-verify/{token}', [AuthController::class, 'verified'])
+    ->name('verified');

@@ -6,15 +6,18 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\LoginRequest;
 use App\Mail\LinkSent;
+use App\Models\User;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 final class AuthController
 {
-    public function createLink(LoginRequest $request)
+    public function createLink(LoginRequest $request): RedirectResponse
     {
-        $token = bcrypt($request->string('email')->toString());
         $email = $request->string('email')->toString();
+        $token = hash('md5', $email);
 
         DB::table('password_reset_tokens')
             ->where('email', $email)
@@ -25,15 +28,32 @@ final class AuthController
             'token' => $token,
         ]);
 
-        $link = 'https://'.$request->url().'/login-verify?token='.$token;
+        $link = 'https://'.$request->getHost().'/auth/login-verify?table='.$token;
 
         Mail::to($email)->send(new LinkSent($link));
 
-        dd('читай логи');
+        return to_route('web:auth:email-sent');
+    }
 
-        // отправка на почту
+    public function verified(string $token): RedirectResponse
+    {
+        $email = DB::table('password_reset_tokens')
+            ->where('token', $token)
+            ->value('email');
 
-        // редирект на вьюшку
+        $user = User::where('email', $email)->firstOrFail();
 
+        Auth::login($user);
+
+        request()->session()->regenerate();
+
+        $token = $user->createToken(
+            'admin',
+            ['*']
+        );
+
+        session(['token' => $token->plainTextToken]);
+
+        return redirect()->intended();
     }
 }

@@ -12,4 +12,9 @@ Route::as('web:')->group(function () {
     Route::prefix('auth')->as('auth:')->group(
         base_path('routes/web/auth.php')
     );
+
+    Route::get('/', function () {
+        request()->user();
+    });
+
 });
