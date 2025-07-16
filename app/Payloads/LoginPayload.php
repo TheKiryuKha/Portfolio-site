@@ -7,28 +7,11 @@ namespace App\Payloads;
 final readonly class LoginPayload
 {
     public function __construct(
-        private string $email,
-        private string $host
+        public string $email,
     ) {}
 
-    /**
-     * @param  array<string, string>  $attr
-     */
-    public static function make(array $attr): self
+    public static function make(string $email): self
     {
-        return new self(
-            email: $attr['email'],
-            host: $attr['host']
-        );
-    }
-
-    public function getEmail(): string
-    {
-        return $this->email;
-    }
-
-    public function getHost(): string
-    {
-        return $this->host;
+        return new self($email);
     }
 }

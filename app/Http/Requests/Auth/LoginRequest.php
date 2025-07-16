@@ -23,9 +23,8 @@ final class LoginRequest extends FormRequest
 
     public function payload(): LoginPayload
     {
-        return LoginPayload::make([
-            'email' => $this->string('email')->toString(),
-            'host' => $this->getHost(),
-        ]);
+        return LoginPayload::make(
+            email: $this->string('email')->toString()
+        );
     }
 }

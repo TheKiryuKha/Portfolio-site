@@ -14,10 +14,10 @@ final class CreateVerifyToken
      */
     public function handle(LoginPayload $payload): string
     {
-        $token = hash('md5', $payload->getEmail());
+        $token = hash('md5', $payload->email);
 
         DB::table('password_reset_tokens')->insert([
-            'email' => $payload->getEmail(),
+            'email' => $payload->email,
             'token' => $token,
         ]);
 

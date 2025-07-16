@@ -15,7 +15,7 @@ final class DeleteVerifyToken
     public function handle(LoginPayload $payload): void
     {
         DB::table('password_reset_tokens')
-            ->where('email', $payload->getEmail())
+            ->where('email', $payload->email)
             ->delete();
     }
 }

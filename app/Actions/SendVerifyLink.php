@@ -15,10 +15,13 @@ final readonly class SendVerifyLink
      */
     public function handle(LoginPayload $payload, string $token): void
     {
+        /** @var string $app_url */
+        $app_url = config('app.url');
+
         Mail::to(
-            users: $payload->getEmail()
+            users: $payload->email
         )->send(new LinkSent(
-            link: 'https://'.$payload->getHost().'/auth?table='.$token
+            link: $app_url.'/auth?table='.$token
         ));
     }
 }

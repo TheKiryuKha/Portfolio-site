@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth;
 
-use App\Models\User;
+use App\Services\LoginService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
-final class LoginController
+final readonly class LoginController
 {
+    public function __construct(
+        private LoginService $service
+    ) {}
+
     public function create(): View
     {
         return view('auth.email-sent');
@@ -19,22 +21,9 @@ final class LoginController
 
     public function store(string $token): RedirectResponse
     {
-        $email = DB::table('password_reset_tokens')
-            ->where('token', $token)
-            ->value('email');
-
-        $user = User::where('email', $email)->firstOrFail();
-
-        Auth::login($user);
+        $this->service->login($token);
 
         request()->session()->regenerate();
-
-        $token = $user->createToken(
-            'admin',
-            ['*']
-        );
-
-        session(['token' => $token->plainTextToken]);
 
         return redirect()->intended();
     }
