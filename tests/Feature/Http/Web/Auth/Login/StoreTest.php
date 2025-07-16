@@ -14,7 +14,7 @@ test('user can login after verifieng email', function () {
     ]);
 
     $this->actingAs($user)
-        ->get(route('web:auth:verified', $token))
+        ->get(route('web:auth:store', $token))
         ->assertRedirect();
 
     $this->assertAuthenticatedAs($user);

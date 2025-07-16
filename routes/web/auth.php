@@ -2,17 +2,16 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\VerifyController;
 
-Route::get('/login', function () {
-    return view('auth.login');
-})->middleware('guest')->name('login-form');
+Route::get('/verify', [VerifyController::class, 'create'])
+    ->name('verify:create');
 
-Route::post('/login', [AuthController::class, 'createLink'])->name('login');
+Route::post('/verify', [VerifyController::class, 'store'])
+    ->name('verify:store');
 
-Route::get('/email-sent', function () {
-    return view('auth.email-sent');
-})->name('email-sent');
+Route::get('/', [LoginController::class, 'create'])->name('create');
 
-Route::get('/login-verify/{token}', [AuthController::class, 'verified'])
-    ->name('verified');
+Route::get('/{token}', [LoginController::class, 'store'])
+    ->name('store');

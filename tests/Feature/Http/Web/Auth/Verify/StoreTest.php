@@ -4,18 +4,16 @@ declare(strict_types=1);
 
 use App\Mail\LinkSent;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
 
 test('user can get link via email', function () {
     $user = User::factory()->create();
     Mail::fake();
 
     $this->actingAs($user)
-        ->post(route('web:auth:login'), [
+        ->post(route('web:auth:verify:store'), [
             'email' => $user->email,
         ])
-        ->assertRedirectToRoute('web:auth:email-sent');
+        ->assertRedirectToRoute('web:auth:create');
 
     $this->assertDatabaseHas('password_reset_tokens', [
         'email' => $user->email,

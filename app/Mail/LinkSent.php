@@ -6,6 +6,7 @@ namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Content;
 use Illuminate\Queue\SerializesModels;
 
 final class LinkSent extends Mailable
@@ -13,14 +14,16 @@ final class LinkSent extends Mailable
     use Queueable, SerializesModels;
 
     public function __construct(
-        protected string $link
+        private readonly string $link
     ) {}
 
-    public function build(): self
+    public function content(): Content
     {
-        return $this->view('emails.link-sent')
-            ->with([
+        return new Content(
+            view: 'emails.link-sent',
+            with: [
                 'link' => $this->link,
-            ]);
+            ]
+        );
     }
 }
