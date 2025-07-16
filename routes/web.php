@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 Route::as('web:')->group(function () {
@@ -13,8 +14,6 @@ Route::as('web:')->group(function () {
         base_path('routes/web/auth.php')
     );
 
-    Route::get('/', function () {
-        request()->user();
-    });
+    Route::get('/', HomeController::class)->name('home');
 
 });
