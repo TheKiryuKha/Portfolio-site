@@ -8,6 +8,8 @@
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="portfolio/css/index.css">
 
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
     <script src="https://kit.fontawesome.com/1c3b2e895a.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/scale.css" />
     <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/scale.css" />
@@ -22,12 +24,6 @@
         <!-- ABOUT ME SECTION -->
         <div class="d-flex justify-content-center" id="about-me">
             <div class="d-flex">
-                <div class="flex-shrink-0">
-                    <!-- IMAGE OF THE PERSON-->
-                    <img class="gradiant-effect"
-                        src="https://cdn.discordapp.com/avatars/450634297871695896/11c0b373752cdf3abc424da95dc9e343.png?size=2048"
-                        alt="image">
-                </div>
                 <div class="flex-grow-1 ms-5 name-heading">
                     <!-- NAME OF THE PERSON -->
                     <h1>Kirill Zuyeu</h1>
@@ -48,9 +44,7 @@
         <br>
         <!-- SKILLS OR TECH HE KNOWS -->
         <div class="d-flex justify-content-center align-content-between flex-wrap" id="skills">
-            @foreach ($skills as $skill)
-                <i class="fab fa-{{  $skill->source }} skills-icon" data-tippy-content="{{ $skill->description }}"></i>
-            @endforeach
+            
         </div>
 
 
@@ -58,25 +52,10 @@
             <h1>PROJECTS</h1>
         </div>
 
-        <!-- PROJECT THAT HE OWNS -->
+        <!-- PROJECT THAT I OWN -->
         <div class="container-xxl" style="max-width: 1034px;" id="projects">
             <div class="row row-cols-1 row-cols-md-3 g-4">
-                
-                @foreach ($projects as $project)
-                    <div class="col">
-                        <div class="card mb-3 h-100" style="max-width: 18rem;">
-                            <div class="card-body">
-                                <h5 class="card-title">{{$project->title}}</h5>
-                                <p class="card-text">{{$project->description}}</p>
-                            </div>
-                            <div class="card-footer bg-transparent border-0">
-                                <i class="fab fa-github view-github" 
-                                onclick="window.open('{{$project->link}}', 'target=_blank')"></i>
-                            </div>
-                        </div>
-                    </div> 
-                @endforeach
-
+                {{--  --}}
             </div>
         </div>
 
@@ -105,16 +84,72 @@
     <script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>
 
     <script>
-        tippy('[data-tippy-content]', {
-            arrow: false,
-            inertia: true,
-            animation: 'scale',
-            theme: 'gradiant',
-            placement: 'bottom',
+
+        
+        
+    
+        $(document).ready(function(){
+            $.ajax({
+                method: "GET",
+                url: "{{route('api:projects:index')}}",
+                
+            })
+            .done(function(data) {
+                const $container = $('#projects .row');
+                        
+                $container.empty();
+                $.each(data.data, function(index, project) {
+                    $container.append(`
+                        <div class="col">
+                            <div class="card mb-3 h-100" style="max-width: 18rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title">${project.attributes.title}</h5>
+                                    <p class="card-text">${project.attributes.description}</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <i class="fab fa-github view-github" 
+                                    onclick="window.open('${project.attributes.link}', '_blank')"></i>
+                                </div>
+                            </div>
+                        </div> 
+                    `);
+                });
+
+                tippy('[data-tippy-content]', {
+                    arrow: false,
+                    inertia: true,
+                    animation: 'scale',
+                    theme: 'gradiant',
+                    placement: 'bottom',
+                });
+
+            })
+            
+            $.ajax({
+                method: "GET",
+                url: "{{route('api:skills:index')}}",
+                
+            })
+            .done(function(data) {
+                const $container = $('#skills'); 
+                        
+                $container.empty();
+                $.each(data.data, function(index, skill) {
+                    $container.append(`
+                        <i class="fab fa-${skill.attributes.source} skills-icon" data-tippy-content="${skill.attributes.description}"></i>
+                    `);
+                });
+
+                tippy('[data-tippy-content]', {
+                    arrow: false,
+                    inertia: true,
+                    animation: 'scale',
+                    theme: 'gradiant',
+                    placement: 'bottom',
+                });
+            })        
         });
     </script>
-
-
 </body>
 
 </html>
