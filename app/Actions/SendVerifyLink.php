@@ -21,7 +21,7 @@ final readonly class SendVerifyLink
         Mail::to(
             users: $payload->email
         )->send(new LinkSent(
-            link: $app_url.'/auth?table='.$token
+            link: $app_url.'/auth/'.$token
         ));
     }
 }

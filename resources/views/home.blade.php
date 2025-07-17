@@ -40,7 +40,13 @@
             </div>
         </div>
 
-        <h1 class="gradiant-effect" id="second-heading">SKILLS</h1>
+        <h1 class="gradiant-effect" id="second-heading">
+            SKILLS
+        
+            @auth
+                <i class="fas fa-plus view-github" onclick=window.open('https://githib.com')></i>
+            @endauth
+        </h1>
         <br>
         <!-- SKILLS OR TECH HE KNOWS -->
         <div class="d-flex justify-content-center align-content-between flex-wrap" id="skills">
@@ -49,11 +55,18 @@
 
 
         <div class="container-xxl gradiant-effect" style=" max-width: 1034px;" id="third-heading">
-            <h1>PROJECTS</h1>
+            <h1>
+                PROJECTS 
+
+                @auth
+                    <i class="fas fa-plus view-github" onclick=window.open('https://githib.com')></i>
+                @endauth
+            </h1>
         </div>
 
         <!-- PROJECT THAT I OWN -->
         <div class="container-xxl" style="max-width: 1034px;" id="projects">
+            
             <div class="row row-cols-1 row-cols-md-3 g-4">
                 {{--  --}}
             </div>
@@ -84,10 +97,7 @@
     <script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>
 
     <script>
-
-        
-        
-    
+            
         $(document).ready(function(){
             $.ajax({
                 method: "GET",
@@ -108,8 +118,14 @@
                                 </div>
                                 <div class="card-footer bg-transparent border-0">
                                     <i class="fab fa-github view-github" 
-                                    onclick="window.open('${project.attributes.link}', '_blank')"></i>
+                                    onclick="window.open('${project.attributes.link}', '_blank')"></i>                                    
+                                    
+                                    @auth                                        
+                                        <i class="fas fa-cog view-github" onclick=window.open('https://githib.com')></i>
+                                        <i class="fas fa-trash view-github" onclick=window.open('https://githib.com')></i>
+                                    @endauth
                                 </div>
+                                
                             </div>
                         </div> 
                     `);
@@ -137,6 +153,9 @@
                 $.each(data.data, function(index, skill) {
                     $container.append(`
                         <i class="fab fa-${skill.attributes.source} skills-icon" data-tippy-content="${skill.attributes.description}"></i>
+                        @auth
+                            <i class="fas fa-trash view-github" onclick=window.open('https://githib.com')></i>
+                        @endauth
                     `);
                 });
 
